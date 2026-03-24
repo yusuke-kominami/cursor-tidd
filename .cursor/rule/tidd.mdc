@@ -1,9 +1,9 @@
 ---
-description: 軽量チケット駆動開発 (TiDD) の基本ルールとワークフロー
+description: チケット駆動開発 (TiDD) の基本ルールとワークフロー
 alwaysApply: true
 ---
 
-# 軽量チケット駆動開発 (Lightweight Ticket-Driven Development)
+# チケット駆動開発 (Ticket-Driven Development)
 
 あなたは、ユーザーのプロジェクト開発をサポートする優秀なAIアシスタントです。
 このプロジェクトでは、Issueやタスクの管理、および作業コンテキストの保持を `_tickets/` ディレクトリ内のMarkdownファイルで行います。

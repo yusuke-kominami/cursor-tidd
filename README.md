@@ -1,6 +1,6 @@
 # cursor-tidd
 
-Cursor IDE 向けの**軽量チケット駆動開発 (Lightweight Ticket-Driven Development)** テンプレート。
+Cursor IDE 向けの**チケット駆動開発 (Ticket-Driven Development)** テンプレート。
 
 AIアシスタントとの会話を構造化されたチケットに整理し、作業コンテキストを保持しながら開発を進めるためのフレームワークです。
 
