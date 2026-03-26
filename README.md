@@ -8,7 +8,7 @@ Cursor IDE 向けの**チケット駆動開発 (Ticket-Driven Development)** テ
 
 TiDD (Ticket-Driven Development) は、すべての作業をチケットとして管理する開発スタイルです。cursor-tidd では以下の特徴を持ちます：
 
-- **1チケット = 1ファイル**: `_tickets/<NNN>-<slug>.ticket.md` にすべてを集約
+- **1チケット = 1ディレクトリ**: `_tickets/<NNN>-<slug>/` にチケット・作業ログ・PRなどを集約
 - **作業ログが主役**: 調査結果・手順・判明した事実を時系列で蓄積し、日を跨いでもコンテキストを失わない
 - **AIフレンドリー**: Cursor のスラッシュコマンドと連携し、既存のドキュメントやタスクからチケットを生成
 - **軽量**: 最小限のルールで最大限の効果。プロジェクトに合わせて柔軟にカスタマイズ可能
@@ -25,16 +25,20 @@ TiDD (Ticket-Driven Development) は、すべての作業をチケットとし�
 │   ├── ticket.md              # /ticket コマンド
 │   └── implement.md           # /implement コマンド
 ├── template/
-│   └── slug.ticket.md         # チケットテンプレート
+│   ├── NNN-ticket.md          # チケットテンプレート
+│   ├── NNN-worklog.md         # 作業ログテンプレート
+│   ├── NNN-pr.md              # PRテンプレート
+│   └── NNN-deployments.md     # デプロイ記録テンプレート
 └── steering/
     └── steering.md            # プロジェクトメモリ（テンプレート）
 
 _tickets/                      # チケット格納ディレクトリ（空で作成）
+_ref/                          # 参照用ドキュメント格納ディレクトリ
 ```
 
 ### チーム利用の場合
 
-`.cursor/` と `_tickets/` をそのまま Git にコミットしてチーム全体で共有します。
+`.cursor/` と `_tickets/` と `_ref/` をそのまま Git にコミットしてチーム全体で共有します。
 
 ### 個人利用の場合（既存リポジトリに後付け）
 
@@ -45,6 +49,7 @@ _tickets/                      # チケット格納ディレクトリ（空で�
 ```
 .cursor/
 _tickets/
+_ref/
 ```
 
 これにより、TiDD 関連のファイルは自分のローカル環境にだけ存在し、チームのリポジトリには一切影響しません。
@@ -83,19 +88,21 @@ _tickets/
 
 ## チケットの構成
 
-```markdown
-# タイトル
+チケットは常にディレクトリで管理します。最小構成は `ticket.md` と `worklog.md` の2ファイルです。
 
-**Status**: draft | **Created**: YYYY-MM-DD
-
----
-
-## 背景と目的        ← なぜこの作業が必要か
-## 方針              ← どう解決するか
-## タスク一覧        ← 何をやるか（実行可能なタスク）
-## 作業ログ          ← 時系列の記録
-## 参考URL           ← 末尾
 ```
+_tickets/
+├── 001-feature-xxx/
+│   ├── 001-ticket.md                   # 概要・方針・タスク一覧・参考URL
+│   ├── 001-worklog.md                  # 作業ログ
+│   ├── 001-pr.md                       # PRディスクリプション（任意）
+│   └── 001-deployments.md             # デプロイ記録（任意）
+├── 002-fix-yyy/
+│   ├── 002-ticket.md
+│   └── 002-worklog.md
+```
+
+ファイル名に番号プレフィックスを付けることで、Cursor の `@` メンションで一意に特定できます（例: `@001-ticket`）。テンプレートは `.cursor/template/` にあります。
 
 ## ドキュメントの役割分担
 
@@ -103,7 +110,7 @@ _tickets/
 |---------|------|------|
 | `README.md` | プロジェクト紹介 | 外部向けの概要、セットアップ手順 |
 | `.cursor/steering/steering.md` | 意思決定の記録 | なぜこうなったか、選択の背景と理由 |
-| `_tickets/<slug>.ticket.md` | チケット単位の作業記録 | 背景・方針・タスク・作業ログ・参考URL |
+| `_tickets/<NNN>-<slug>/` | チケット単位の作業記録 | 背景・方針・タスク・作業ログ・参考URL |
 
 ## カスタマイズ
 
@@ -113,7 +120,7 @@ _tickets/
 
 ### チケットテンプレートの拡張
 
-`.cursor/template/slug.ticket.md` を編集して、プロジェクトに必要なセクションを追加できます。
+`.cursor/template/` 配下のテンプレートを編集して、プロジェクトに必要なセクションを追加できます。`-pr.md` や `-deployments.md` はプロジェクトの性質に応じて必要なもののみ使用してください。
 
 ## ライセンス
 
